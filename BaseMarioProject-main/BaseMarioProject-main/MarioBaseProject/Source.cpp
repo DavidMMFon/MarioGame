@@ -9,18 +9,49 @@ using namespace std;
 SDL_Window* g_window = nullptr;
 
 bool InitSDL();
+void CLoseSDL();
+bool Update();
 void CloseSDL();
 
 int main(int argc, char* args[])
 {
 	if (InitSDL())
 	{
-		SDL_Delay(5000);
+		//flag to check if we wish to quit
+		bool quit = false;
+
+		//Game Loop
+		while (!quit)
+		{
+			quit = Update();
+		}
 	}
 
-	CloseSDL();
+	CLoseSDL();
 
 	return 0;
+
+}
+
+bool Update()
+{
+	SDL_Event e;
+	SDL_PollEvent(&e);
+
+	switch (e.type)
+	{
+		//click the 'X' to quit
+	case SDL_QUIT:
+		return true;
+		break;
+	}
+
+	return false;
+
+}
+
+void CloseSDL()
+{
 
 }
 
@@ -50,7 +81,7 @@ bool InitSDL()
 	}
 }
 
-void CloseSDL()
+void CLoseSDL()
 {
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
