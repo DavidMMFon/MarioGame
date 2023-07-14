@@ -9,11 +9,12 @@ class GameScreen
 
 	protected:
 		SDL_Renderer* m_renderer;
-	private:
+	
+    public:
 		GameScreen(SDL_Renderer* renderer);
 		~GameScreen();
 
-		virtual void Render();
+		virtual void Render(); 
 		virtual void Update(float deltaTime, SDL_Event e);
 
 };

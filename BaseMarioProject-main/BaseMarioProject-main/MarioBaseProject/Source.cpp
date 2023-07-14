@@ -6,9 +6,13 @@
 #include "constants.h"
 #include "Commons.h"
 #include "Texture2D.h"
-#include <iostream>
+#include "GameScreenManager.h"
+#include <iostream>1
 
 using namespace std;
+
+GameScreenManager* game_screen_manager;
+Uint32 g_old_time;
 
 SDL_Renderer* g_renderer = nullptr;
 Texture2D* g_texture = nullptr;
@@ -23,6 +27,10 @@ int main(int argc, char* args[])
 {
 	if (InitSDL())
 	{
+		game_screen_manager = new GameScreenManager(g_renderer, SCREEN_LEVEL1);
+		//set the time
+		g_old_time = SDL_GetTicks();
+
 		//flag to check if we wish to quit
 		bool quit = false;
 
@@ -44,6 +52,7 @@ int main(int argc, char* args[])
 
 bool Update()
 {
+	Uint32 new_time = SDL_GetTicks();
 	SDL_Event e;
 	SDL_PollEvent(&e);
 
@@ -55,8 +64,9 @@ bool Update()
 		break;
 	}
 
+	game_screen_manager->Update((float)(new_time - g_old_time) / 1000.0f, e);
+	g_old_time = new_time;
 	return false;
-
 }
 
 
@@ -131,6 +141,11 @@ void CloseSDL()
 	delete g_texture;
 	g_texture = nullptr;
 
+	//destroy the game screen manager
+	delete game_screen_manager;
+	game_screen_manager = nullptr;
+
+
 }
 
 void Render()
@@ -140,6 +155,7 @@ void Render()
 	SDL_RenderClear(g_renderer);
 
 	g_texture->Render(Vector2D(), SDL_FLIP_NONE);
+	game_screen_manager->Render();
 	
 	//update the screen
 	SDL_RenderPresent(g_renderer);
