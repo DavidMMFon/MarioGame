@@ -34,3 +34,4 @@ enum FACING
 	FACING_RIGHT
 };
 
+const float MOVEMENTSPEED = 50.0f;
