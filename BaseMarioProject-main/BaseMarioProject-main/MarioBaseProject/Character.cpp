@@ -15,10 +15,37 @@ Character::Character(SDL_Renderer* renderer, string imagePath, Vector2D start_po
 
 Character :: ~Character()
 {
+	m_renderer = nullptr;
+}
+
+void Character :: Render()
+{
+	m_texture->Render(m_position, SDL_FLIP_NONE);
+}
+
+void Character::Update(float deltaTime, SDL_Event e)
+{
+	switch (e.key.keysym.sym)
+	{
+		case SDLK_LEFT:
+			m_position.x -= 1;
+			break;
+
+		case SDLK_RIGHT:
+			m_position.x += 1;
+			break;
+
+	}
+}
+
+void Character::SetPosition(Vector2D new_position)
+{
+	m_position = new_position;
 
 }
 
 Vector2D Character :: GetPosition()
 {
-
+	return m_position;
 }
+
