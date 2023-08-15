@@ -21,6 +21,7 @@ protected:
 	bool m_moving_right;
 	virtual void MoveLeft(float deltaTime);
 	virtual void MoveRight(float deltaTime);
+	virtual void AddGravity(float deltaTime);
 
 private:
 

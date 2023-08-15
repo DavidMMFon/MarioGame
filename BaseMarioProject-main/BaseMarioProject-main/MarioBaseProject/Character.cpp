@@ -35,30 +35,28 @@ void Character :: Render()
 
 void Character::Update(float deltaTime, SDL_Event e)
 {
+	if (m_moving_left)
+	{
+		MoveLeft(deltaTime);
+	}
+	else if (m_moving_right)
+	{
+		MoveRight(deltaTime);
+	}
 	switch (e.key.keysym.sym)
 	{
-		case SDLK_LEFT:
+	case SDLK_LEFT:
 			
 		m_moving_left = true;
-			
-		if (m_moving_left)
-		{
-			MoveLeft(deltaTime);
-		}
-		else if (m_moving_right)
-		{
-			MoveRight(deltaTime);
-			}
 
-			break;
+		break;
 
-		case SDLK_RIGHT:
-			
-			m_moving_right = true;
+	case SDLK_RIGHT:
 
-			break;
+		m_moving_right = true;
+		m_moving_left = false;
+		break;
 	}
-	
 }
 
 void Character::SetPosition(Vector2D new_position)
@@ -75,10 +73,21 @@ void Character::MoveLeft(float deltaTime)
 {
 	m_facing_direction = FACING_LEFT;
 	m_position.x -= MOVEMENTSPEED * deltaTime;
+	m_moving_right = false;
+	m_moving_left = false;
 }
 void Character::MoveRight(float deltaTime)
 {
 	m_facing_direction = FACING_RIGHT;
 	m_position.x += MOVEMENTSPEED * deltaTime;
+	m_moving_left = false;
+	m_moving_right = false;
 }
 
+void Character::AddGravity(float deltaTime)
+{
+	if (m_position.y > 0)
+	{
+		m_position.y -= 9.81 * deltaTime;
+	}
+}
