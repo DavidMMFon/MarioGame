@@ -17,6 +17,7 @@ protected:
 	SDL_Renderer* m_renderer;
 	Vector2D m_position;
 	Texture2D* m_texture;
+	FACING m_facing_direction;
 
 public:
 

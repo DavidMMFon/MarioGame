@@ -5,14 +5,17 @@
 
 #include "GameScreen.h"
 #include "Commons.h"
+#include "Character.h"
 
 class Texture2D;
+class Character;
 
 class GameScreenLevel1 : GameScreen
 {
 	private:
+		
+		Character* my_character;
 		Texture2D* m_background_texture;
-
 		bool SetUpLevel1();
 
 	public:
