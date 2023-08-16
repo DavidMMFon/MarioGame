@@ -22,6 +22,12 @@ protected:
 	virtual void MoveLeft(float deltaTime);
 	virtual void MoveRight(float deltaTime);
 	virtual void AddGravity(float deltaTime);
+	virtual void Jump();
+	bool m_jumping;
+	bool m_can_jump;
+	float m_jump_force;
+	const float INITIAL_JUMP_FORCE = 80.0f;
+
 
 private:
 
